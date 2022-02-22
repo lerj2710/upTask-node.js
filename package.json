@@ -1,0 +1,22 @@
+{
+  "name": "uptasknode",
+  "version": "1.0.0",
+  "description": "backend con nodejs, MVC",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git remote add origin https://github.com/lerj2710/upTask-node.js.git"
+  },
+  "author": "Luis Rodriguez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

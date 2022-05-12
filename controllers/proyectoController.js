@@ -1,13 +1,11 @@
 const Proyectos = require('../models/Proyectos');
 
 const proyectoHome = async (req, res) => {
-    const proyectos = await Proyectos.findAll();
-
-
+	const proyectos = await Proyectos.findAll();
 
 	res.render('index', {
-		nombrePagina: 'Proyectos',
-        proyectos
+		nombrePagina: 'Proyectos ' + res.locals.year,
+		proyectos
 	});
 };
 const formularioProyectos = (req, res) => {

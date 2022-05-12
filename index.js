@@ -10,15 +10,12 @@ require('./models/Proyectos');
 // conectar a DB
 const db = require('./config/db');
 
-
-db.sync()
-    .then(  ()=> console.log('conectado la base de datos'))
-    .catch( error => console.log(error));
+db.sync().then(() => console.log('conectado la base de datos')).catch((error) => console.log(error));
 //crear una app de express
 const app = express();
 
 //habilitar los archivos estaticos
-app.use(express.static('public')); 
+app.use(express.static('public'));
 
 // Habilitar Pug
 app.set('view engine', 'pug');
@@ -27,14 +24,21 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, './views'));
 
 //pasar var dump a la apliaciones
-app.use((req, res, next) =>{
-    res.locals.vardump = helpers.vardump;
-    next();
-})
+app.use((req, res, next) => {
+	res.locals.vardump = helpers.vardump;
+	next();
+});
+
+//Middelware
+app.use((req, res, next) => {
+	const fecha = new Date();
+	res.locals.year = fecha.getFullYear();
+	next();
+});
 
 //habilitar bodyParse
-app.use(bodyParse.urlencoded({extended: true}))
+app.use(bodyParse.urlencoded({ extended: true }));
 
-app.use('/', router )
+app.use('/', router);
 
-app.listen(3000)
+app.listen(3000);

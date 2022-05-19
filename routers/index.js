@@ -2,8 +2,15 @@ const { Router } = require('express');
 const { body } = require('express-validator');
 const router = Router();
 
-// llamr controlador
-const { proyectoHome, nuevoProyectos, formularioProyectos, proyectoUrl } = require('../controllers/proyectoController');
+// controladores
+const {
+	proyectoHome,
+	nuevoProyectos,
+	formularioProyectos,
+	proyectoUrl,
+	formularioEditar,
+	actualizarProyecto
+} = require('../controllers/proyectoController');
 
 router.get('/', proyectoHome);
 router.get('/nuevo-proyecto', formularioProyectos);
@@ -11,4 +18,9 @@ router.post('/nuevo-proyecto', body('nombre').not().isEmpty().trim().escape(), n
 
 //listar proyectos
 router.get('/proyectos/:url', proyectoUrl);
+
+// Actulizar proyecto
+router.get('/proyecto/editar/:id', formularioEditar);
+router.post('/nuevo-proyecto/:id', body('nombre').not().isEmpty().trim().escape(), actualizarProyecto);
+
 module.exports = router;

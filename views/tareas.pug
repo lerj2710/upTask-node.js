@@ -12,9 +12,10 @@ block contenido
         
         // TODO -- Listados pendientes
         
+        //- pre=vardump(proyecto)
         
         // Acciones que se pueden realizar
         .contenedor-acciones
-            a(href="#" class="boton") Editar Proyect
+            a(href=`/proyecto/editar/${proyecto.id}` class="boton") Editar Proyect
             button#eliminar-proyecto(type="button" class="boton eliminar") Eliminar Proyect 
         

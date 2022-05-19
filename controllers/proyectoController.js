@@ -8,12 +8,17 @@ const proyectoHome = async (req, res) => {
 		proyectos
 	});
 };
-const formularioProyectos = (req, res) => {
+const formularioProyectos = async (req, res) => {
+	const proyectos = await Proyectos.findAll();
+
 	res.render('nuevoProyectos', {
-		nombrePagina: 'Nuevo Proyectos'
+		nombrePagina: 'Nuevo Proyectos',
+		proyectos
 	});
 };
 const nuevoProyectos = async (req, res) => {
+	const proyectos = await Proyectos.findAll();
+
 	const { nombre } = req.body;
 
 	let errores = [];
@@ -25,7 +30,8 @@ const nuevoProyectos = async (req, res) => {
 	if (errores.length > 0) {
 		res.render('nuevoProyectos', {
 			nombrePagina: 'Nuevo proyecto',
-			errores
+			errores,
+			proyectos
 		});
 	} else {
 		//insertar en db
@@ -34,8 +40,28 @@ const nuevoProyectos = async (req, res) => {
 	}
 };
 
+const proyectoUrl = async (req, res, next) => {
+	const proyectos = await Proyectos.findAll();
+
+	const proyecto = await Proyectos.findOne({
+		where: {
+			url: req.params.url
+		}
+	});
+	
+	if (!proyecto) return next();
+
+	//render a la vista
+	res.render('tareas', {
+		nombrePagina: 'Tareas Del Proyecto',
+		proyecto,
+		proyectos
+	});
+};
+
 module.exports = {
 	proyectoHome,
 	formularioProyectos,
-	nuevoProyectos
+	nuevoProyectos,
+	proyectoUrl
 };

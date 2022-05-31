@@ -12,6 +12,7 @@ const {
 	actualizarProyecto,
 	eliminarProyecto
 } = require('../controllers/proyectoController');
+const { agregartarea } = require('../controllers/tareasController');
 
 router.get('/', proyectoHome);
 router.get('/nuevo-proyecto', formularioProyectos);
@@ -27,4 +28,5 @@ router.post('/nuevo-proyecto/:id', body('nombre').not().isEmpty().trim().escape(
 //Eliminar Proyecto
 router.delete('/proyectos/:url', eliminarProyecto);
 
+router.post('/proyectos/:url', agregartarea);
 module.exports = router;

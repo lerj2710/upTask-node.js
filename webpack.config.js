@@ -6,7 +6,7 @@ const { merge } = require('webpack-merge');
 module.exports = {
 	entry: './public/js/app.js',
 	output: {
-		filename: 'blundle.js',
+		filename: 'bundle.js',
 		path: path.join(__dirname, './public/dist/')
 	},
 	module: {
@@ -16,7 +16,7 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-		 				presets: [ '@babel/preset-env' ]
+						presets: [ '@babel/preset-env' ]
 					}
 				}
 			}

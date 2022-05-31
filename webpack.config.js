@@ -6,8 +6,8 @@ const { merge } = require('webpack-merge');
 module.exports = {
 	entry: './public/js/app.js',
 	output: {
-		filenanme: 'blundle.js',
-		path: path.join(__dirname, './public/dist')
+		filename: 'blundle.js',
+		path: path.join(__dirname, './public/dist/')
 	},
 	module: {
 		rules: [

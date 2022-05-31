@@ -96,13 +96,16 @@ const actualizarProyecto = async (req, res) => {
 		});
 	} else {
 		//insertar en db
-		await Proyectos.update(
-			{ nombre: nombre }, 
-			{ where: { id: req.params.id } }
-		);
+		await Proyectos.update({ nombre: nombre }, { where: { id: req.params.id } });
 		res.redirect('/');
 	}
 };
+
+const eliminarProyecto = async (req, res, next) => {
+	console.log(req);	  
+};
+
+
 
 module.exports = {
 	proyectoHome,
@@ -110,5 +113,6 @@ module.exports = {
 	nuevoProyectos,
 	proyectoUrl,
 	formularioEditar,
-	actualizarProyecto
+	actualizarProyecto,
+	eliminarProyecto
 };

@@ -19,20 +19,16 @@ if (btnEliminar) {
 			confirmButtonText: 'Si, Borrar!',
 			cancelButtonText: 'No, Cancelar'
 		}).then((result) => {
-			//enviar peticion
-			const url = `${location.origin}/proyectos/${urlProyecto}`;
-
-            
-			axios.delete(url, { params: urlProyecto })
-            .then( function(respuesta){
-               
-                console.log('**************');
-                console.log(respuesta);
-                console.log('*************');
-            }) 
-            return;
-
 			if (result.isConfirmed) {
+				//enviar peticion
+				const url = `${location.origin}/proyectos/${urlProyecto}`;
+
+				axios.delete(url, { params: { urlProyecto } })
+                    .then(function(respuesta) {
+					console.log(respuesta);
+				});
+				return;
+
 				Swal.fire('ELiminado!', 'El proyecto se ha eliminado.', 'success');
 
 				setTimeout(() => {

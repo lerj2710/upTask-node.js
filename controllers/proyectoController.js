@@ -102,10 +102,17 @@ const actualizarProyecto = async (req, res) => {
 };
 
 const eliminarProyecto = async (req, res, next) => {
-	console.log(req);	  
+	// req params ó query
+	// console.log(req.query);
+	const { urlProyecto } = req.query;
+
+	const resultado = await Proyectos.destroy({ where: { url: urlProyecto } });
+
+	if (!resultado) {
+		return next();
+	}
+	res.status(200).send('proyecto eliminado correctamente');
 };
-
-
 
 module.exports = {
 	proyectoHome,

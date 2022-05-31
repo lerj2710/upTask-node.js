@@ -25,6 +25,6 @@ router.get('/proyecto/editar/:id', formularioEditar);
 router.post('/nuevo-proyecto/:id', body('nombre').not().isEmpty().trim().escape(), actualizarProyecto);
 
 //Eliminar Proyecto
-router.delete('//rpyectos/:url', eliminarProyecto);
+router.delete('/proyectos/:url', eliminarProyecto);
 
 module.exports = router;

@@ -13,11 +13,23 @@ block contenido
 
         // TODO -- formulario aqui
 
-        
-        // TODO -- Listados pendientes
-        
-        //- pre=vardump(proyecto)
-        
+        //- pre=vardump(tareas)
+
+        .listado-pendientes
+            ul 
+                if tareas.length   
+                    each tarea in tareas 
+                        li.tarea(data-tarea=tarea.id)   
+                            p= tarea.tarea
+                            .acciones 
+                                if tarea.estado
+                                    i.far.fa-check-circle.completo
+                                else 
+                                    i.far.fa-check-circle
+                                i.fas.fa-trash
+                else 
+                    p No Hay Tareas en este proyecto
+
         // Acciones que se pueden realizar
         .contenedor-acciones
             a(href=`/proyecto/editar/${proyecto.id}` class="boton") Editar Proyect

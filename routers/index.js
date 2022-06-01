@@ -12,21 +12,28 @@ const {
 	actualizarProyecto,
 	eliminarProyecto
 } = require('../controllers/proyectoController');
-const { agregartarea } = require('../controllers/tareasController');
+const { agregartarea, cambiarEstadoTarea, eliminarTarea } = require('../controllers/tareasController');
+
+// METODO GET - PROYECTO
 
 router.get('/', proyectoHome);
 router.get('/nuevo-proyecto', formularioProyectos);
-router.post('/nuevo-proyecto', body('nombre').not().isEmpty().trim().escape(), nuevoProyectos);
-
-//listar proyectos
 router.get('/proyectos/:url', proyectoUrl);
-
-// Actulizar proyecto
 router.get('/proyecto/editar/:id', formularioEditar);
+
+// METODO POST - PROYECTO && tarea
+
+router.post('/nuevo-proyecto', body('nombre').not().isEmpty().trim().escape(), nuevoProyectos);
 router.post('/nuevo-proyecto/:id', body('nombre').not().isEmpty().trim().escape(), actualizarProyecto);
-
-//Eliminar Proyecto
-router.delete('/proyectos/:url', eliminarProyecto);
-
 router.post('/proyectos/:url', agregartarea);
+
+// METODO DELETE - PROYECTO && tarea
+
+router.delete('/proyectos/:url', eliminarProyecto);
+router.delete('/tareas/:id', eliminarTarea);
+
+// METODO PATCH - tarea
+
+router.patch('/tareas/:id', cambiarEstadoTarea);
+
 module.exports = router;

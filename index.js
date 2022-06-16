@@ -7,6 +7,7 @@ const helpers = require('./helpers');
 //importar el modelo
 require('./models/Proyectos');
 require('./models/Tareas');
+require('./models/Usuarios');
 
 // conectar a DB
 const db = require('./config/db');

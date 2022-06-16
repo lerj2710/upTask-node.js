@@ -13,7 +13,7 @@ const {
 	eliminarProyecto
 } = require('../controllers/proyectoController');
 const { agregartarea, cambiarEstadoTarea, eliminarTarea } = require('../controllers/tareasController');
-const { fromCrearCuenta } = require('../controllers/usuarosController');
+const { fromCrearCuenta, crearCuenta } = require('../controllers/usuariosController');
 
 // METODO GET - PROYECTO
 
@@ -28,6 +28,8 @@ router.get('/crear-cuenta', fromCrearCuenta);
 router.post('/nuevo-proyecto', body('nombre').not().isEmpty().trim().escape(), nuevoProyectos);
 router.post('/nuevo-proyecto/:id', body('nombre').not().isEmpty().trim().escape(), actualizarProyecto);
 router.post('/proyectos/:url', agregartarea);
+router.post('/crear-cuenta', crearCuenta);
+
 
 // METODO DELETE - PROYECTO && tarea
 

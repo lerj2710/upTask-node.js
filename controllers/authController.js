@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 
 const Usuarios = require('../models/Usuarios');
+const enviareEmail = require('../handlers/email');
 
 const passport = require('passport');
 const Sequelize = require('sequelize');
@@ -49,7 +50,14 @@ const enviarToken = async (req, res) => {
 	//guardar en DB
 	await usuario.save();
 	const resetUrl = `http://${req.headers.host}/reestablecer/${usuario.token}`;
-	console.log(resetUrl);
+
+	// enviareEmail con el token
+	await enviareEmail.enviar({
+		usuario,
+		subject: 'Password Reset',
+		resetUrl,
+		archivo: 'reestablecer-password'
+	});
 };
 
 const validarToken = async (req, res) => {
@@ -92,7 +100,7 @@ const actualizarPassword = async (req, res) => {
 
 	//guardar DB
 	await usuario.save();
-	
+
 	req.flash('correcto', 'tu contraseña fue modificada correctamente');
 	res.redirect('/iniciar-sesion');
 };

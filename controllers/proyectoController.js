@@ -2,7 +2,9 @@ const Proyectos = require('../models/Proyectos');
 const Tareas = require('../models/Tareas');
 
 const proyectoHome = async (req, res) => {
-	const proyectos = await Proyectos.findAll();
+	// console.log(res.locals.usuario);
+	const usuarioId = res.locals.usuario.id;
+	const proyectos = await Proyectos.findAll({ where: { usuarioId } });
 
 	res.render('index', {
 		nombrePagina: 'Proyectos ' + res.locals.year,
@@ -11,7 +13,8 @@ const proyectoHome = async (req, res) => {
 };
 
 const formularioProyectos = async (req, res) => {
-	const proyectos = await Proyectos.findAll();
+	const usuarioId = res.locals.usuario.id;
+	const proyectos = await Proyectos.findAll({ where: { usuarioId } });
 
 	res.render('nuevoProyectos', {
 		nombrePagina: 'Nuevo Proyectos',
@@ -20,7 +23,8 @@ const formularioProyectos = async (req, res) => {
 };
 
 const nuevoProyectos = async (req, res) => {
-	const proyectos = await Proyectos.findAll();
+	const usuarioId = res.locals.usuario.id;
+	const proyectos = await Proyectos.findAll({ where: { usuarioId } });
 
 	const { nombre } = req.body;
 
@@ -37,18 +41,22 @@ const nuevoProyectos = async (req, res) => {
 			proyectos
 		});
 	} else {
+		//no hay errores
+		const usuarioId = res.locals.usuario.id;
 		//insertar en db
-		await Proyectos.create({ nombre });
+		await Proyectos.create({ nombre, usuarioId });
 		res.redirect('/');
 	}
 };
 
 const proyectoUrl = async (req, res, next) => {
-	const proyectosPromise = Proyectos.findAll();
+	const usuarioId = res.locals.usuario.id;
+	const proyectosPromise = Proyectos.findAll({ where: { usuarioId } });
 
 	const proyectoPromise = Proyectos.findOne({
 		where: {
-			url: req.params.url
+			url: req.params.url,
+			usuarioId
 		}
 	});
 	const [ proyectos, proyecto ] = await Promise.all([ proyectosPromise, proyectoPromise ]);
@@ -57,10 +65,9 @@ const proyectoUrl = async (req, res, next) => {
 	const tareas = await Tareas.findAll({
 		where: {
 			proyectoId: proyecto.id
-		},
+		}
 		// include: [ { model: Proyectos } ]
 	});
-	// console.log(tareas);
 
 	if (!proyecto) return next();
 
@@ -74,11 +81,13 @@ const proyectoUrl = async (req, res, next) => {
 };
 
 const formularioEditar = async (req, res) => {
-	const proyectosPromise = Proyectos.findAll();
+	const usuarioId = res.locals.usuario.id;
+	const proyectosPromise = Proyectos.findAll({ where: { usuarioId } });
 
 	const proyectoPromise = Proyectos.findOne({
 		where: {
-			id: req.params.id
+			id: req.params.id,
+			usuarioId
 		}
 	});
 	const [ proyectos, proyecto ] = await Promise.all([ proyectosPromise, proyectoPromise ]);
@@ -91,7 +100,8 @@ const formularioEditar = async (req, res) => {
 	});
 };
 const actualizarProyecto = async (req, res) => {
-	const proyectos = await Proyectos.findAll();
+	const usuarioId = res.locals.usuario.id;
+	const proyectos = await Proyectos.findAll({ where: { usuarioId } });
 
 	const { nombre } = req.body;
 
@@ -116,7 +126,6 @@ const actualizarProyecto = async (req, res) => {
 
 const eliminarProyecto = async (req, res, next) => {
 	// req params ó query
-	// console.log(req.query);
 	const { urlProyecto } = req.query;
 
 	const resultado = await Proyectos.destroy({ where: { url: urlProyecto } });

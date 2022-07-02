@@ -35,8 +35,16 @@ const crearCuenta = async (req, res) => {
 		});
 	}
 };
+
+const formRestablecerPassword = (req, res)=>{
+	res.render('reestablecer', {
+		nombrePagina: 'Reestablecer tu Contraseña'
+	});
+
+}
 module.exports = {
 	fromCrearCuenta,
 	crearCuenta,
-	fromInciarSesion
+	fromInciarSesion,
+	formRestablecerPassword
 };

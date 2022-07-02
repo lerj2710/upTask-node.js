@@ -34,7 +34,9 @@ const Usuarios = db.define(
 					msg: 'El password no puede ir vacio'
 				}
 			}
-		}
+		},
+		token: Sequelize.STRING,
+		expiracion: Sequelize.DATE
 	},
 	{
 		hooks: {
@@ -45,10 +47,9 @@ const Usuarios = db.define(
 	}
 );
 //Metodos personalizados
-Usuarios.prototype.verificarPassword = function(password){
-	return bcrypt.compareSync(password, this.password)
-}
-
+Usuarios.prototype.verificarPassword = function(password) {
+	return bcrypt.compareSync(password, this.password);
+};
 
 Usuarios.hasMany(Proyectos);
 

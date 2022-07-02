@@ -5,7 +5,8 @@ const bodyParse = require('body-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const passport = require('./config/passport')
+const passport = require('./config/passport');
+
 // habiltar los helpers
 const helpers = require('./helpers');
 //importar el modelo
@@ -16,9 +17,7 @@ require('./models/Usuarios');
 // conectar a DB
 const db = require('./config/db');
 
-db.sync()
-	.then(() => console.log('conectado la base de datos'))
-	.catch((error) => console.log(error));
+db.sync().then(() => console.log('conectado la base de datos')).catch((error) => console.log(error));
 
 //crear una app de express
 const app = express();
@@ -40,11 +39,13 @@ app.use(flash());
 
 app.use(cookieParser());
 //sessiones que nos permite navegar navegar sin volver autenticar
-app.use(session({
-	secret: 'supersecreto',
-	resave: false,
-	saveUninitialized: false
-}));
+app.use(
+	session({
+		secret: 'superSecret',
+		resave: false,
+		saveUninitialized: false
+	})
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -53,7 +54,7 @@ app.use((req, res, next) => {
 	res.locals.vardump = helpers.vardump;
 	res.locals.mensajes = req.flash();
 	res.locals.usuario = { ...req.user } || null;
-	console.log(res.locals.usuario);
+	// console.log(res.locals.usuario);
 	next();
 });
 

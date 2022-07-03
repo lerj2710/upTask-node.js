@@ -25,7 +25,8 @@ const {
 	fromCrearCuenta,
 	crearCuenta,
 	fromInciarSesion,
-	formRestablecerPassword
+	formRestablecerPassword,
+	confirmarCuenta
 } = require('../controllers/usuariosController');
 
 // METODO GET - PROYECTO
@@ -35,6 +36,7 @@ router.get('/nuevo-proyecto', usuarioAutenticado, formularioProyectos);
 router.get('/proyectos/:url', usuarioAutenticado, proyectoUrl);
 router.get('/proyecto/editar/:id', usuarioAutenticado, formularioEditar);
 router.get('/crear-cuenta', fromCrearCuenta);
+router.get('/confirmar/:correo', confirmarCuenta);
 //iniciar session
 router.get('/iniciar-sesion', fromInciarSesion);
 // cerrar sesion

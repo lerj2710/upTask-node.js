@@ -58,6 +58,9 @@ const enviarToken = async (req, res) => {
 		resetUrl,
 		archivo: 'reestablecer-password'
 	});
+	// redirigir
+	req.flash('correcto', 'Se envio un mensaje a tu correo');
+	res.redirect('/iniciar-sesion');
 };
 
 const validarToken = async (req, res) => {

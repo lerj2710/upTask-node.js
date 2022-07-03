@@ -15,7 +15,10 @@ passport.use(
 		async (email, password, done) => {
 			try {
 				const usuario = await Usuarios.findOne({
-					where: { email: email }
+					where: {
+						email,
+						activo
+					}
 				});
 				//el usuario existe pero password incorrecto
 				if (!usuario.verificarPassword(password)) {
@@ -44,4 +47,4 @@ passport.deserializeUser((usuario, callback) => {
 	callback(null, usuario);
 });
 
-module.exports = passport
+module.exports = passport;

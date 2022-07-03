@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const router = require('./routers');
 const path = require('path');
@@ -67,6 +68,10 @@ app.use((req, res, next) => {
 
 app.use('/', router);
 
-app.listen(3000);
+//servidor y puerto
+const host = process.env.HOST || '0.0.0.0';
+const port = process.env.PORT || 3000;
 
-// require('./handlers/email');
+app.listen(port, host , ()=>{
+	console.log(`el servidor esta funcionado en el puerto ${port}`);
+})

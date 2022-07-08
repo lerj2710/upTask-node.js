@@ -1,12 +1,10 @@
+const passport = require('passport');
+const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
 const Usuarios = require('../models/Usuarios');
 const enviareEmail = require('../handlers/email');
-
-const passport = require('passport');
 const Sequelize = require('sequelize');
-const bcrypt = require('bcrypt');
-
 const Op = Sequelize.Op;
 
 const autenticarUsuario = passport.authenticate('local', {
@@ -39,7 +37,7 @@ const enviarToken = async (req, res) => {
 	//si no exite el usuario
 	if (!usuario) {
 		req.flash('error', 'No exite el usuario');
-		res.render('reestablecer', {
+		res.render('/reestablecer', {
 			nombrePagina: 'Reestablecer tu Contraseña',
 			mensajes: req.flash()
 		});
@@ -47,6 +45,7 @@ const enviarToken = async (req, res) => {
 	//usuario existe
 	usuario.token = crypto.randomBytes(20).toString('hex');
 	usuario.expiracion = Date.now() + 3600000;
+	
 	//guardar en DB
 	await usuario.save();
 	const resetUrl = `http://${req.headers.host}/reestablecer/${usuario.token}`;
@@ -91,11 +90,13 @@ const actualizarPassword = async (req, res) => {
 			}
 		}
 	});
+	
 	//veririficarmos si el usuario existe
 	if (!usuario) {
 		req.flash('error', 'No Valido');
 		res.redirect('/reestablecer');
 	}
+	
 	//hashear el passoword nuevo
 	usuario.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
 	usuario.token = null;

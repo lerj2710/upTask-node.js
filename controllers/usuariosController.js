@@ -42,9 +42,11 @@ const crearCuenta = async (req, res) => {
 			confirmarUrl,
 			archivo: 'confirmar-cuenta'
 		});
+
 		//redidigir al usuario
 		req.flash('correcto', 'Enviamos un mensaje a tu correo, confirma tu cuenta');
 		res.redirect('/iniciar-sesion');
+
 	} catch (error) {
 		req.flash('error', error.errors.map((error) => error.message));
 		res.render('crearCuenta', {
@@ -75,7 +77,7 @@ const confirmarCuenta = async (req, res) => {
 		res.redirect('/crear-cuenta');
 	}
 	usuario.activo = 1;
-	usuario.save();
+	 await usuario.save();
 
 	req.flash('correcto', 'cuenta confirmada correctamente');
 	res.redirect('/iniciar-sesion');

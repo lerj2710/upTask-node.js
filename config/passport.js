@@ -17,7 +17,7 @@ passport.use(
 				const usuario = await Usuarios.findOne({
 					where: {
 						email,
-						activo
+						activo: 1
 					}
 				});
 				//el usuario existe pero password incorrecto
